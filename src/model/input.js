@@ -3,10 +3,6 @@ import { includes } from 'lodash-es';
 import UnityVersionParser from './unity-version-parser';
 
 class Input {
-  static get testModes() {
-    return ['all', 'playmode', 'editmode'];
-  }
-
   static isValidFolderName(folderName) {
     const validFolderName = new RegExp(/^(\.|\.\/)?(\.?[\w~]+([_-]?[\w~]+)*\/?)*$/);
 
@@ -27,10 +23,6 @@ class Input {
     const checkName = getInput('checkName') || 'Test Results';
 
     // Validate input
-    if (!includes(this.testModes, testMode)) {
-      throw new Error(`Invalid testMode ${testMode}`);
-    }
-
     if (!this.isValidFolderName(rawArtifactsPath)) {
       throw new Error(`Invalid artifactsPath "${rawArtifactsPath}"`);
     }
