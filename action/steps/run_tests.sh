@@ -29,7 +29,7 @@ case $TEST_MODE in
     echo "Play mode selected for testing."
     PLAY_MODE=true
     ;;
-  *)
+  all)
     echo "All modes selected for testing."
     EDIT_MODE=true
     PLAY_MODE=true
@@ -139,6 +139,43 @@ if [ $PLAY_MODE = true ]; then
 fi
 
 #
+# Testing in PlayMode
+#
+
+if [ $EDIT_MODE = false && $PLAY_MODE = false ]; then
+  echo ""
+  echo "###############################"
+  echo "#   Testing Target Platform   #"
+  echo "###############################"
+  echo ""
+  unity-editor \
+    -batchmode \
+    -logFile "$FULL_ARTIFACTS_PATH/$TEST_MODE.log" \
+    -projectPath "$UNITY_PROJECT_PATH" \
+    -runTests \
+    -testPlatform $TEST_MODE \
+    -testResults "$FULL_ARTIFACTS_PATH/$TEST_MODE-results.xml" \
+    $CUSTOM_PARAMETERS
+
+  # Catch exit code
+  TARGET_PLATFORM_EXIT_CODE=$?
+
+  # Print unity log output
+  cat "$FULL_ARTIFACTS_PATH/$TEST_MODE.log"
+
+  # Display results
+  if [ $TARGET_PLATFORM_EXIT_CODE -eq 0 ]; then
+    echo "Run succeeded, no failures occurred";
+  elif [ $TARGET_PLATFORM_EXIT_CODE -eq 2 ]; then
+    echo "Run succeeded, some tests failed";
+  elif [ $TARGET_PLATFORM_EXIT_CODE -eq 3 ]; then
+    echo "Run failure (other failure)";
+  else
+    echo "Unexpected exit code $TARGET_PLATFORM_EXIT_CODE";
+  fi
+fi
+
+#
 # Results
 #
 
@@ -169,14 +206,28 @@ if [ $PLAY_MODE = true ]; then
   cat "$FULL_ARTIFACTS_PATH/playmode-results.xml" | grep test-run | grep Passed
 fi
 
+if [ $EDIT_MODE = false && $PLAY_MODE = false ]; then
+  echo ""
+  echo "#################################"
+  echo "#    Target Platform Results    #"
+  echo "#################################"
+  echo ""
+  cat "$FULL_ARTIFACTS_PATH/$TEST_MODE-results.xml"
+  cat "$FULL_ARTIFACTS_PATH/$TEST_MODE-results.xml" | grep test-run | grep Passed
+fi
+
 #
 # Exit
 #
 
-if [ $EDIT_MODE_EXIT_CODE -gt 0 ]; then
+if [ $EDIT_MODE_EXIT_CODE -ne 0 ]; then
   TEST_RUNNER_EXIT_CODE=$EDIT_MODE_EXIT_CODE
 fi
 
-if [ $PLAY_MODE_EXIT_CODE -gt 0 ]; then
+if [ $PLAY_MODE_EXIT_CODE -ne 0 ]; then
   TEST_RUNNER_EXIT_CODE=$PLAY_MODE_EXIT_CODE
+fi
+
+if [ $TARGET_PLATFORM_EXIT_CODE -ne 0 ]; then
+  TEST_RUNNER_EXIT_CODE=$TARGET_PLATFORM_EXIT_CODE
 fi
