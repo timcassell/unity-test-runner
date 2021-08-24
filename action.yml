@@ -17,10 +17,6 @@ inputs:
     required: false
     default: 'all'
     description: 'The type of tests to be run by the test runner.'
-  testPlatform:
-    required: false
-    default: ''
-    description: 'The target platform for the test runner to run the tests on.'
   artifactsPath:
     required: false
     default: 'artifacts'
