@@ -197,7 +197,6 @@ if [ $EDIT_MODE = true ]; then
   echo "#    Edit Mode Results    #"
   echo "###########################"
   echo ""
-  cat "$FULL_ARTIFACTS_PATH/editmode-results.xml"
   cat "$FULL_ARTIFACTS_PATH/editmode-results.xml" | grep test-run | grep Passed
 fi
 
@@ -207,7 +206,6 @@ if [ $PLAY_MODE = true ]; then
   echo "#    Play Mode Results    #"
   echo "###########################"
   echo ""
-  cat "$FULL_ARTIFACTS_PATH/playmode-results.xml"
   cat "$FULL_ARTIFACTS_PATH/playmode-results.xml" | grep test-run | grep Passed
 fi
 
@@ -217,7 +215,6 @@ if [ $EDIT_MODE = false ] && [ $PLAY_MODE = false ]; then
   echo "#    Target Platform Results    #"
   echo "#################################"
   echo ""
-  cat "$FULL_ARTIFACTS_PATH/$TEST_MODE-results.xml"
   cat "$FULL_ARTIFACTS_PATH/$TEST_MODE-results.xml" | grep test-run | grep Passed
 fi
 
