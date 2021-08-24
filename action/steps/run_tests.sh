@@ -147,7 +147,7 @@ fi
 # Testing in PlayMode
 #
 
-if [ $EDIT_MODE = false && $PLAY_MODE = false ]; then
+if [ $EDIT_MODE = false ] && [ $PLAY_MODE = false ]; then
   echo ""
   echo "###############################"
   echo "#   Testing Target Platform   #"
@@ -211,7 +211,7 @@ if [ $PLAY_MODE = true ]; then
   cat "$FULL_ARTIFACTS_PATH/playmode-results.xml" | grep test-run | grep Passed
 fi
 
-if [ $EDIT_MODE = false && $PLAY_MODE = false ]; then
+if [ $EDIT_MODE = false ] && [ $PLAY_MODE = false ]; then
   echo ""
   echo "#################################"
   echo "#    Target Platform Results    #"
