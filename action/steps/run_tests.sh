@@ -34,6 +34,11 @@ case $TEST_MODE in
     EDIT_MODE=true
     PLAY_MODE=true
     ;;
+  *)
+    echo "Target platform selected for testing."
+    EDIT_MODE=false
+    PLAY_MODE=false
+    ;;
 esac
 
 # The following tests are 2019 mode (requires Unity 2019.2.11f1 or later)
