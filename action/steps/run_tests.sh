@@ -144,7 +144,7 @@ if [ $PLAY_MODE = true ]; then
 fi
 
 #
-# Testing in PlayMode
+# Testing Target Platform
 #
 
 if [ $EDIT_MODE = false ] && [ $PLAY_MODE = false ]; then
@@ -153,7 +153,7 @@ if [ $EDIT_MODE = false ] && [ $PLAY_MODE = false ]; then
   echo "#   Testing Target Platform   #"
   echo "###############################"
   echo ""
-  unity-editor \
+  xvfb-run -ae /dev/stdout unity-editor \
     -batchmode \
     -logFile "$FULL_ARTIFACTS_PATH/$TEST_MODE.log" \
     -projectPath "$UNITY_PROJECT_PATH" \
